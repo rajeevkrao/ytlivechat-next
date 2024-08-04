@@ -8,6 +8,7 @@ import styles from "./page.module.css";
 
 export default function ChatPage() {
   const [hostname, setHostname] = useState("");
+	const [test, setTest] = useState("");
 
   const searchParams = useSearchParams();
   const videoId = searchParams.get("v");
@@ -17,7 +18,14 @@ export default function ChatPage() {
 
   useEffect(() => {
     const noSleep = new NoSleep();
-    (async () => {
+
+		document.addEventListener('click', function enableNoSleep() {
+			document.removeEventListener('click', enableNoSleep, false);
+			noSleep.enable();
+			setTest("wakeLock Enabled")
+		}, false);
+
+    /* (async () => {
       const { state } = await navigator.permissions.query({
         name: "geolocation",
       });
@@ -39,15 +47,15 @@ export default function ChatPage() {
           enableHighAccuracy: true,
         }
       );
-
-      return () => {
-        noSleep.disable();
-      };
-    })();
+    })(); */
+		return () => {
+			noSleep.disable();
+		};
   }, []);
 
   return (
     <>
+			{test}
       {hostname && (
         <iframe
           className={styles.iframe}
