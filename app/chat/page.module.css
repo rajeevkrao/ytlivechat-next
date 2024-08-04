@@ -1,10 +1,17 @@
 .iframe {
   all: unset;
   width: 100%;
-  height: 80vh;
+  height: 86vh;
 }
 
 .dialog {
   margin: 0 auto;
   top: 50vh;
+}
+
+.status {
+  position: fixed;
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
 }

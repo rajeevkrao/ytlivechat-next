@@ -19,35 +19,19 @@ export default function ChatPage() {
   useEffect(() => {
     const noSleep = new NoSleep();
 
+		setInterval(() => {
+			if(noSleep.isEnabled) {
+				setTest("WL🟢")
+			}
+			else {
+				setTest("WL🔴")
+			}
+		}, 500)
+
 		document.addEventListener('click', function enableNoSleep() {
 			document.removeEventListener('click', enableNoSleep, false);
 			noSleep.enable();
-			setTest("wakeLock Enabled")
 		}, false);
-
-    /* (async () => {
-      const { state } = await navigator.permissions.query({
-        name: "geolocation",
-      });
-      if (state === "granted" || state === "prompt") {
-        noSleep.enable();
-      }
-      navigator.geolocation.watchPosition(
-        async (position) => {
-          try {
-            console.log({ position });
-          } catch (err: any) {
-            console.log(err);
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        {
-          enableHighAccuracy: true,
-        }
-      );
-    })(); */
 		return () => {
 			noSleep.disable();
 		};
@@ -55,7 +39,7 @@ export default function ChatPage() {
 
   return (
     <>
-			{test}
+		<div className={styles.status}>{test}</div>
       {hostname && (
         <iframe
           className={styles.iframe}
