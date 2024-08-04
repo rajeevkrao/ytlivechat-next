@@ -3,3 +3,8 @@
   width: 100%;
   height: 95vh;
 }
+
+.dialog {
+  margin: 0 auto;
+  top: 50vh;
+}

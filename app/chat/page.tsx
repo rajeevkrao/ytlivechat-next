@@ -17,11 +17,34 @@ export default function ChatPage() {
 
   useEffect(() => {
     const noSleep = new NoSleep();
-    noSleep.enable();
-    return () => {
-      noSleep.disable();
-    };
-  });
+    (async () => {
+      const { state } = await navigator.permissions.query({
+        name: "geolocation",
+      });
+      if (state === "granted" || state === "prompt") {
+        noSleep.enable();
+      }
+      navigator.geolocation.watchPosition(
+        async (position) => {
+          try {
+            console.log({ position });
+          } catch (err: any) {
+            console.log(err);
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        {
+          enableHighAccuracy: true,
+        }
+      );
+
+      return () => {
+        noSleep.disable();
+      };
+    })();
+  }, []);
 
   return (
     <>
